@@ -2,7 +2,6 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" },
         "public/index.php": { "runtime": "vercel-php@0.6.0" }
     },
     "routes": [
@@ -13,7 +12,6 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
-        "APP_URL": "https://portfolio-LuthfiRafanandaNaufal.vercel.app"
+        "APP_DEBUG": "false"
     }
 }
