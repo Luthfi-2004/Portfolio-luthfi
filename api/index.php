@@ -1,32 +1,29 @@
 <?php
-// Tampilkan semua error
+
+// Konfigurasi Error Reporting Super Agresif
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo "<pre>";
-echo "<strong>SYSTEM CHECK:</strong>\n";
+try {
+    // Cek file vital
+    if (!file_exists(__DIR__ . '/../public/index.php')) {
+        throw new Exception('File public/index.php hilang!');
+    }
 
-// Cek keberadaan folder penting
-$files = scandir(__DIR__ . '/../');
-echo "Root directory contents:\n";
-print_r($files);
+    // Jalankan Laravel dalam blok Try-Catch
+    require __DIR__ . '/../public/index.php';
 
-if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    echo "\n[FATAL] Folder 'vendor' TIDAK DITEMUKAN. \n";
-    echo "Penyebab: 'composer install' tidak jalan atau 'outputDirectory' membuang folder ini.";
-    die();
-} else {
-    echo "\n[OK] Folder 'vendor' ditemukan.\n";
+} catch (\Throwable $e) {
+    // Jika Laravel crash, tangkap errornya dan tampilkan
+    http_response_code(500);
+    echo "<div style='background:#f8d7da; color:#721c24; padding:20px; font-family:monospace; border:1px solid #f5c6cb; margin:20px;'>";
+    echo "<h1>🔥 LARAVEL CRASHED 🔥</h1>";
+    echo "<h3>Error Message:</h3>";
+    echo "<pre style='font-size:16px; font-weight:bold;'>" . htmlspecialchars($e->getMessage()) . "</pre>";
+    echo "<h3>File:</h3>";
+    echo "<p>" . $e->getFile() . " on line " . $e->getLine() . "</p>";
+    echo "<h3>Stack Trace:</h3>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "</div>";
 }
-
-if (!file_exists(__DIR__ . '/../bootstrap/app.php')) {
-    echo "\n[FATAL] Folder 'bootstrap' TIDAK DITEMUKAN.";
-    die();
-}
-
-echo "\n[INFO] Mencoba menyalakan Laravel...\n";
-echo "</pre>";
-
-// Jika lolos pengecekan, baru jalankan Laravel
-require __DIR__ . '/../public/index.php';
