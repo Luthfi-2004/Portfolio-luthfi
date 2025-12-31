@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-600/50 hover:scale-105;
+    }
+    
+    .btn-secondary {
+        @apply px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white hover:text-slate-900 transition-all duration-300;
+    }
+}
+
+/* Selection color */
+::selection {
+    background-color: #2563eb;
+    color: white;
+}
+
+::-moz-selection {
+    background-color: #2563eb;
+    color: white;
+}
